@@ -125,6 +125,63 @@
         modal.show();
     };
 
+    // Fetch IP Address
+    function fetchIpAddress(callback) {
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                callback(data.ip);
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+                callback(null);
+            });
+    }
+
+    // Handle CV download
+    $('#downloadCV').on('click', function (event) {
+        event.preventDefault();
+
+        const userAgent = navigator.userAgent;
+        let ipAddress = null;
+
+        fetchIpAddress((ip) => {
+            ipAddress = ip;
+
+            const emailData = {
+                name: 'CV Download Event',
+                email: 'info@yourdomain.com', // Replace with your email
+                subject: 'CV Download Notification',
+                message: `
+                    A user has downloaded the CV:
+                    - IP Address: ${ipAddress || 'Unavailable'}
+                    - User Agent: ${userAgent}
+                `,
+            };
+
+            const serviceId = ENV.EMAILJS_SERVICE_ID;
+            const templateId = ENV.EMAILJS_TEMPLATE_ID;
+            const publicKey = ENV.EMAILJS_PUBLIC_KEY;
+
+            // Initialize EmailJS with the public key
+            emailjs.init(publicKey);
+
+            // Send email using EmailJS
+            emailjs.send(serviceId, templateId, emailData)
+                .then(function () {
+                    // Email sent successfully; proceed to open the CV
+                    window.open('./pdf/Tharindu_Attygalle-Resume.pdf', '_blank'); // Open the CV
+                })
+                .catch(function (error) {
+                    // Log the error for debugging purposes
+                    console.error('Error', error);
+                    // Still proceed to open the CV
+                    window.open('./pdf/Tharindu_Attygalle-Resume.pdf', '_blank'); // Open the CV
+                });
+
+        });
+    });
+
     // Contact Form Submission
     $('#contactForm').on('submit', function (e) {
         e.preventDefault(); // Prevent default form submission
@@ -136,7 +193,6 @@
             message: $('#message').val(),
         };
 
-        // Use environment variables from env.js
         const serviceId = ENV.EMAILJS_SERVICE_ID;
         const templateId = ENV.EMAILJS_TEMPLATE_ID;
         const publicKey = ENV.EMAILJS_PUBLIC_KEY;
