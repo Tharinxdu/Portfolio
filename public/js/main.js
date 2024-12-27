@@ -167,16 +167,17 @@
             emailjs.init(publicKey);
 
             // Send email using EmailJS
+            // Immediately open the CV
+            window.open('./pdf/Tharindu_Attygalle-Resume.pdf', '_blank');
+
+            // Send email using EmailJS in the background
             emailjs.send(serviceId, templateId, emailData)
                 .then(function () {
-                    // Email sent successfully; proceed to open the CV
-                    window.open('./pdf/Tharindu_Attygalle-Resume.pdf', '_blank'); // Open the CV
+                    console.log('CV success');
                 })
                 .catch(function (error) {
                     // Log the error for debugging purposes
-                    console.error('Error', error);
-                    // Still proceed to open the CV
-                    window.open('./pdf/Tharindu_Attygalle-Resume.pdf', '_blank'); // Open the CV
+                    console.error('CV error', error);
                 });
 
         });
