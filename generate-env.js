@@ -1,6 +1,10 @@
 const fs = require("fs");
+const path = require("path");
 
-// Generate env.js dynamically from environment variables
+// Define the output file path in the `public` directory
+const envFilePath = path.join(__dirname, "public", "env.js");
+
+// Create the env.js file dynamically
 const envContent = `
 const ENV = {
     EMAILJS_SERVICE_ID: "${process.env.EMAILJS_SERVICE_ID}",
@@ -9,10 +13,10 @@ const ENV = {
 };
 `;
 
-fs.writeFileSync("env.js", envContent, (err) => {
+fs.writeFileSync(envFilePath, envContent, (err) => {
     if (err) {
         console.error("Error writing env.js:", err);
         process.exit(1);
     }
-    console.log("env.js generated successfully!");
+    console.log("env.js generated successfully at", envFilePath);
 });
