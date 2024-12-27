@@ -1,7 +1,15 @@
 {
   "builds": [
     {
+      "src": "generate-env.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "env.js",
+      "use": "@vercel/static-build"
+    },
+    {
+      "src": "index.html",
       "use": "@vercel/static-build"
     }
   ],
@@ -10,8 +18,5 @@
       "src": "/env.js",
       "dest": "/env.js"
     }
-  ],
-  "scripts": {
-    "build": "node generate-env.js"
-  }
+  ]
 }
