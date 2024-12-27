@@ -1,0 +1,17 @@
+{
+  "builds": [
+    {
+      "src": "env.js",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/env.js",
+      "dest": "/env.js"
+    }
+  ],
+  "scripts": {
+    "build": "node generate-env.js"
+  }
+}
