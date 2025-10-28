@@ -168,7 +168,7 @@
 
             // Send email using EmailJS
             // Immediately open the CV
-            window.open('./pdf/Tharindu_Attygalle-Resume.pdf', '_blank');
+            window.open('./pdf/Tharindu-Attygalle.pdf', '_blank');
 
             // Send email using EmailJS in the background
             emailjs.send(serviceId, templateId, emailData)
